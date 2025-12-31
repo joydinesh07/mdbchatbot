@@ -52,7 +52,7 @@ function App() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('/api/chat', { message: userMsg.content });
+      const response = await axios.post('http://localhost:8000/chat', { message: userMsg.content });
       
       const assistantMsg: Message = {
         id: (Date.now() + 1).toString(),
