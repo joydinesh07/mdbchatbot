@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+
+# Environment variables
+.env
+
+# Database Data
+data/
+*.log
+
+# OS
+.DS_Store
