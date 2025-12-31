@@ -52,10 +52,6 @@ function App() {
     setIsLoading(true);
 
     try {
-      // Simulate tool usage parsing or just direct chat
-      // In a real streaming response, we would parse tool calls.
-      // For this MVP, we just wait for the full response.
-      
       const response = await axios.post('/api/chat', { message: userMsg.content });
       
       const assistantMsg: Message = {
@@ -67,11 +63,20 @@ function App() {
       
       setMessages(prev => [...prev, assistantMsg]);
       
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Chat Error:", error);
+      let errorMessage = 'Error: Failed to connect to backend. Is the server running?';
+      
+      if (error.response?.data?.error) {
+        errorMessage = `Error: ${error.response.data.error}`;
+      } else if (error.message) {
+        errorMessage = `Error: ${error.message}`;
+      }
+      
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: 'Error: Failed to connect to backend. Is the server running?',
+        content: errorMessage,
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMsg]);
